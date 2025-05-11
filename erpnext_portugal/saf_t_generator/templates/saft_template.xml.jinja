@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuditFile xmlns="urn:OECD:StandardAuditFile-Tax:PT_1.04_01">
+
+  <Header>
+    <AuditFileVersion>{{ header.audit_file_version }}</AuditFileVersion>
+    <CompanyID>{{ header.company_tax_id }}</CompanyID>
+    <TaxRegistrationNumber>{{ header.company_tax_id }}</TaxRegistrationNumber>
+    <CompanyName>{{ header.company_name }}</CompanyName>
+    <FiscalYear>{{ header.fiscal_year }}</FiscalYear>
+    <StartDate>{{ header.start_date }}</StartDate>
+    <EndDate>{{ header.end_date }}</EndDate>
+    <CurrencyCode>{{ header.currency }}</CurrencyCode>
+    <DateCreated>{{ header.system_entry_date.split("T")[0] }}</DateCreated>
+    <TaxEntity>{{ header.tax_entity or 'Global' }}</TaxEntity>
+    <ProductID>{{ header.product_id }}</ProductID>
+    <ProductVersion>{{ header.product_version }}</ProductVersion>
+    <SoftwareCertificateNumber>{{ header.software_cert_no }}</SoftwareCertificateNumber>
+    <Hash>{{ header.hash or '' }}</Hash>
+    <SystemEntryDate>{{ header.system_entry_date }}</SystemEntryDate>
+    <HeaderComment>{{ header.header_comment }}</HeaderComment>
+  </Header>
+
+  <MasterFiles>
+    {% for c in customers %}
+    <Customer>
+      <CustomerID>{{ c.CustomerID }}</CustomerID>
+      <AccountID>{{ c.CustomerID }}</AccountID>
+      <CustomerTaxID>{{ c.CustomerTaxID }}</CustomerTaxID>
+      <CompanyName>{{ c.CompanyName }}</CompanyName>
+      <BillingAddress>{{ c.BillingAddress }}</BillingAddress>
+      <Country>{{ c.Country }}</Country>
+    </Customer>
+    {% endfor %}
+
+    {% for p in products %}
+    <Product>
+      <ProductType>{{ p.ProductType }}</ProductType>
+      <ProductCode>{{ p.ProductCode }}</ProductCode>
+      <ProductDescription>{{ p.ProductDescription }}</ProductDescription>
+      <ProductNumberCode>{{ p.ProductNumberCode }}</ProductNumberCode>
+    </Product>
+    {% endfor %}
+
+    {% for t in taxes %}
+    <TaxTableEntry>
+      <TaxType>{{ t.TaxType }}</TaxType>
+      <TaxCountryRegion>{{ t.TaxCountryRegion }}</TaxCountryRegion>
+      <TaxCode>{{ t.TaxCode }}</TaxCode>
+      <Description>{{ t.Description }}</Description>
+      <TaxPercentage>{{ "%.2f"|format(t.TaxPercentage) }}</TaxPercentage>
+    </TaxTableEntry>
+    {% endfor %}
+  </MasterFiles>
+
+  <GeneralLedgerEntries>
+    {% for gl in gl_entries %}
+    <Transaction>
+      <TransactionID>{{ gl.name }}</TransactionID>
+      <Period>{{ gl.posting_date.month }}</Period>
+      <TransactionDate>{{ gl.posting_date }}</TransactionDate>
+      <SourceID>{{ gl.voucher_type }}</SourceID>
+      <Description>{{ gl.remarks or '' }}</Description>
+      <Lines>
+        <DebitAmount>{{ "%.2f"|format(gl.debit) }}</DebitAmount>
+        <CreditAmount>{{ "%.2f"|format(gl.credit) }}</CreditAmount>
+        <AccountID>{{ gl.account }}</AccountID>
+      </Lines>
+    </Transaction>
+    {% endfor %}
+  </GeneralLedgerEntries>
+
+  <SourceDocuments>
+    <SalesInvoices>
+      {% for inv in invoices %}
+      <Invoice>
+        <InvoiceNo>{{ inv.name }}</InvoiceNo>
+        <InvoiceDate>{{ inv.posting_date }}</InvoiceDate>
+        <InvoiceType>FT</InvoiceType>
+        <CustomerID>{{ inv.customer }}</CustomerID>
+        <TaxPayable>{{ "%.2f"|format(inv.total - inv.net_total) }}</TaxPayable>
+        <NetTotal>{{ "%.2f"|format(inv.net_total) }}</NetTotal>
+        <GrossTotal>{{ "%.2f"|format(inv.total) }}</GrossTotal>
+      </Invoice>
+      {% endfor %}
+    </SalesInvoices>
+
+    <Payments>
+      {% for pay in payments %}
+      <Payment>
+        <PaymentRefNo>{{ pay.name }}</PaymentRefNo>
+        <PaymentDate>{{ pay.posting_date }}</PaymentDate>
+        <CustomerID>{{ pay.party }}</CustomerID>
+        <Amount>{{ "%.2f"|format(pay.paid_amount) }}</Amount>
+        <PaymentMethod>{{ pay.reference_no or "Transferência" }}</PaymentMethod>
+      </Payment>
+      {% endfor %}
+    </Payments>
+  </SourceDocuments>
+
+</AuditFile>
