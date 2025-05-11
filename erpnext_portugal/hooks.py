@@ -12,7 +12,7 @@ app_license = "MIT"
 
 # Associar o JS diretamente ao Doctype Company (sem build)
 doctype_js = {
-    "Company": "public/js/company_saft_export.js"
+    "Company": "js/company_saft_export.js"
 }
 
 # Fixtures (opcional)
