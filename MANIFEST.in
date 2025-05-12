@@ -1,4 +1,9 @@
 include README.md
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
 recursive-include erpnext_portugal *.py
 recursive-include erpnext_portugal/saf_t_generator/templates *.jinja
 recursive-include erpnext_portugal/saf_t_generator/schema *.xsd
