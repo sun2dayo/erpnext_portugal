@@ -15,12 +15,10 @@ app_email = "apps@novadx.eu"
 app_license = "GPL-3.0"
 required_apps = ["erpnext"]
 
-# Inclui JS personalizado na interface
-#app_include_js = "/assets/erpnext_portugal/custom_scripts/company_saft_export.custom_scripts"
 
 # Associar o JS diretamente ao Doctype Company (sem build)
 doctype_js = {
-    "Company": ["erpnext_portugal/custom_scripts/company_saft_export.js"]
+    "Company": ["erpnext_portugal/js/company_saft_export.js"]
 }
 
 # Fixtures (opcional)
