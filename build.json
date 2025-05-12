@@ -1,11 +1,6 @@
 {
-  "apps": [
-    {
-      "name": "erpnext_portugal",
-      "public": "public",
-      "js": {
-        "company_saft_export": "/js/company_saft_export.js"
-      }
-    }
+  "erpnext_portugal": [
+    "public/js/company_saft_export.js"
   ]
 }
+
