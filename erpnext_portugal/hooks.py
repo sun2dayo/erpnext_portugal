@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-try:
-    from . import __version__ as app_version
-except ImportError:
-    app_version = "0.0.1"
+# App information
+app_version = "0.0.1"
 app_name = "erpnext_portugal"
 app_title = "ERPNext Portugal"
 app_publisher = "NovaDX - Octávio Daio"

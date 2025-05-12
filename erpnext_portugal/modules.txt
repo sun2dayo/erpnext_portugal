@@ -1,1 +1,1 @@
-ERPNext Portugal
+erpnext_portugal
