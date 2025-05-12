@@ -17,9 +17,9 @@ required_apps = ["erpnext"]
 
 
 # Associar o JS diretamente ao Doctype Company (sem build)
-doctype_js = {
-    "Company": ["erpnext_portugal/public/js/company_saft_export.js"]
-}
+#doctype_js = {
+#    "Company": ["erpnext_portugal/public/js/company_saft_export.js"]
+#}
 
 # Fixtures (opcional)
 # fixtures = ["Custom Field", "Property Setter"]
